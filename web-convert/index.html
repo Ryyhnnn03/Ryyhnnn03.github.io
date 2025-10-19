@@ -6,22 +6,55 @@
   <title>Text Converter — PDF / DOC / PPT</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root{--bg1:#0a1020;--bg2:#16233c;--card:rgba(24,34,54,0.85);--accent:#5ca3ff;--accent2:#7ed957;--text:#e6eef6;--muted:#9aa4b2}
+    :root{
+      --bg1:#0a1020;--bg2:#16233c;--card:rgba(24,34,54,0.85);
+      --accent:#5ca3ff;--accent2:#7ed957;
+      --text:#e6eef6;--muted:#9aa4b2
+    }
     *{box-sizing:border-box;font-family:'Poppins',system-ui,Segoe UI,Roboto,sans-serif}
-    body{margin:0;min-height:100vh;background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--text);display:flex;justify-content:center;padding:20px}
+    body{
+      margin:0;min-height:100vh;
+      background:linear-gradient(160deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      display:flex;justify-content:center;padding:20px
+    }
     .container{width:100%;max-width:1000px}
-    header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-    header h1{margin:0;font-size:24px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .logo{background:linear-gradient(135deg,var(--accent),var(--accent2));width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#02172f;box-shadow:0 4px 10px rgba(0,0,0,.3)}
-    .card{background:var(--card);border-radius:14px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.4);backdrop-filter:blur(12px);transition:.3s}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+    header h1{margin:0;font-size:24px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .logo{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      width:46px;height:46px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;color:#02172f;box-shadow:0 4px 10px rgba(0,0,0,.3)
+    }
+    .card{
+      background:var(--card);border-radius:14px;padding:20px;
+      box-shadow:0 8px 24px rgba(0,0,0,.4);
+      backdrop-filter:blur(12px);transition:.3s
+    }
     .card:hover{transform:translateY(-2px)}
-    textarea{width:100%;min-height:320px;border:none;border-radius:10px;padding:12px;background:rgba(255,255,255,.07);color:var(--text);resize:vertical;font-size:15px}
+    textarea{
+      width:100%;min-height:320px;border:none;border-radius:10px;
+      padding:12px;background:rgba(255,255,255,.07);
+      color:var(--text);resize:vertical;font-size:15px
+    }
     label{font-size:13px;color:var(--muted)}
-    select,input[type=text]{border:none;border-radius:8px;padding:10px 12px;font-size:14px;cursor:pointer;transition:.3s}
+    select,input[type=text]{
+      border:none;border-radius:8px;padding:10px 12px;
+      font-size:14px;cursor:pointer;transition:.3s
+    }
     select{background:var(--accent);color:#001833;font-weight:600;appearance:none;position:relative}
     .select-wrap{position:relative;display:inline-block}
-    .select-wrap::after{content:"▾";position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;color:#001833;font-weight:bold}
-    button{border:none;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer;transition:.3s}
+    .select-wrap::after{
+      content:"▾";position:absolute;right:10px;top:50%;
+      transform:translateY(-50%);pointer-events:none;
+      color:#001833;font-weight:bold
+    }
+    button{
+      border:none;border-radius:10px;padding:10px 14px;
+      font-weight:600;cursor:pointer;transition:.3s
+    }
     button.primary{background:var(--accent);color:#02172f}
     button.secondary{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--muted)}
     button.preview{background:#1e293b;color:#fff}
@@ -29,12 +62,16 @@
     .grid{display:grid;grid-template-columns:1fr 320px;gap:16px}
     .controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
     .right-column{display:flex;flex-direction:column;gap:12px}
-    input[type=file]{width:100%;padding:8px;background:rgba(255,255,255,.05);border:none;border-radius:8px;color:var(--text)}
-    footer{margin-top:20px;text-align:center;font-size:13px;color:var(--muted)}
+    input[type=file]{width:100%;padding:8px;background:rgba(255,255,255,.05);
+      border:none;border-radius:8px;color:var(--text)}
     #previewArea{margin-top:12px;display:none}
     .format-info{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
     #fontSelectWrap{display:none;margin-top:10px}
-    @media(max-width:850px){.grid{grid-template-columns:1fr}.controls{justify-content:center}}
+    @media(max-width:850px){
+      .grid{grid-template-columns:1fr}
+      .controls{justify-content:center}
+      header h1{font-size:20px}
+    }
   </style>
 </head>
 <body>
@@ -67,24 +104,65 @@
           </div>
         </div>
 
-        <!-- Font Selection (Only for DOC) -->
+        <!-- Font & Size Selection -->
         <div id="fontSelectWrap">
-          <label for="fontSelect">Pilih Font (DOC):</label>
-          <select id="fontSelect">
-            <!-- Google fonts (will be loaded) -->
-            <option value="Poppins">Poppins</option>
-            <option value="Roboto">Roboto</option>
-            <option value="Open Sans">Open Sans</option>
-            <option value="Montserrat">Montserrat</option>
-            <option value="Lato">Lato</option>
-            <option value="Merriweather">Merriweather</option>
+          <label>Pilih Font & Ukuran (DOC):</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:5px">
+            <select id="fontSelect">
+              <optgroup label="⭐ Google Fonts">
+                <option value="Poppins">Poppins</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+                <option value="Lato">Lato</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Nunito">Nunito</option>
+                <option value="Raleway">Raleway</option>
+                <option value="Quicksand">Quicksand</option>
+                <option value="Source Sans 3">Source Sans 3</option>
+                <option value="Inter">Inter</option>
+                <option value="Work Sans">Work Sans</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Merriweather">Merriweather</option>
+                <option value="Oswald">Oswald</option>
+                <option value="Bebas Neue">Bebas Neue</option>
+                <option value="Josefin Sans">Josefin Sans</option>
+                <option value="Karla">Karla</option>
+                <option value="Rubik">Rubik</option>
+                <option value="DM Sans">DM Sans</option>
+                <option value="Cabin">Cabin</option>
+                <option value="Ubuntu">Ubuntu</option>
+                <option value="Noto Sans">Noto Sans</option>
+                <option value="PT Sans">PT Sans</option>
+              </optgroup>
+              <optgroup label="💻 Font Sistem">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Calibri">Calibri</option>
+                <option value="Cambria">Cambria</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Lucida Sans">Lucida Sans</option>
+              </optgroup>
+            </select>
 
-            <!-- System fonts (no Google load) -->
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Arial">Arial</option>
-            <option value="Courier New">Courier New</option>
-          </select>
+            <select id="fontSizeSelect">
+              <option value="12">12 pt</option>
+              <option value="14" selected>14 pt</option>
+              <option value="16">16 pt</option>
+              <option value="18">18 pt</option>
+              <option value="20">20 pt</option>
+              <option value="22">22 pt</option>
+              <option value="24">24 pt</option>
+              <option value="28">28 pt</option>
+              <option value="32">32 pt</option>
+              <option value="36">36 pt</option>
+              <option value="40">40 pt</option>
+              <option value="48">48 pt</option>
+            </select>
+          </div>
         </div>
 
         <div class="format-info" id="formatInfo">📄 <b>PDF</b> cocok untuk dicetak & dibaca di semua perangkat.</div>
@@ -108,185 +186,138 @@
 
   <script>
   (function(){
-    const input = document.getElementById('inputText'),
-          fileInput = document.getElementById('fileInput'),
-          convertBtn = document.getElementById('convertBtn'),
-          previewBtn = document.getElementById('previewBtn'),
-          clearBtn = document.getElementById('clearBtn'),
-          formatSel = document.getElementById('format'),
-          titleInput = document.getElementById('title'),
-          previewArea = document.getElementById('previewArea'),
-          info = document.getElementById('formatInfo'),
-          fontSelectWrap = document.getElementById('fontSelectWrap'),
-          fontSelect = document.getElementById('fontSelect');
+    const input=document.getElementById('inputText'),
+      fileInput=document.getElementById('fileInput'),
+      convertBtn=document.getElementById('convertBtn'),
+      previewBtn=document.getElementById('previewBtn'),
+      clearBtn=document.getElementById('clearBtn'),
+      formatSel=document.getElementById('format'),
+      titleInput=document.getElementById('title'),
+      previewArea=document.getElementById('previewArea'),
+      info=document.getElementById('formatInfo'),
+      fontSelectWrap=document.getElementById('fontSelectWrap'),
+      fontSelect=document.getElementById('fontSelect'),
+      fontSizeSelect=document.getElementById('fontSizeSelect');
 
-    // fonts that are available on Google Fonts (we will load these)
-    const googleFonts = new Set(['Poppins','Roboto','Open Sans','Montserrat','Lato','Merriweather']);
+    const googleFonts = new Set([
+      'Poppins','Roboto','Open Sans','Lato','Montserrat','Nunito','Raleway','Quicksand',
+      'Source Sans 3','Inter','Work Sans','Playfair Display','Merriweather','Oswald','Bebas Neue',
+      'Josefin Sans','Karla','Rubik','DM Sans','Cabin','Ubuntu','Noto Sans','PT Sans'
+    ]);
 
-    const infoText = {
-      pdf: '📄 <b>PDF</b> cocok untuk dicetak & dibaca di semua perangkat.',
-      doc: '📝 <b>DOC</b> mudah diedit di Microsoft Word. Pilih font di bawah jika ingin beda font.',
-      pptx: '🎞 <b>PPTX</b> cocok untuk presentasi PowerPoint.'
+    const infoText={
+      pdf:'📄 <b>PDF</b> cocok untuk dicetak & dibaca di semua perangkat.',
+      doc:'📝 <b>DOC</b> mudah diedit di Word. Pilih font & ukuran di bawah jika ingin berbeda.',
+      pptx:'🎞 <b>PPTX</b> cocok untuk presentasi PowerPoint.'
     };
 
-    formatSel.addEventListener('change', ()=>{
-      info.innerHTML = infoText[formatSel.value];
-      fontSelectWrap.style.display = formatSel.value === 'doc' ? 'block' : 'none';
+    formatSel.addEventListener('change',()=>{
+      info.innerHTML=infoText[formatSel.value];
+      fontSelectWrap.style.display=formatSel.value==='doc'?'block':'none';
       updatePreviewFont();
     });
 
-    // update preview font when font selection changes (only affects preview)
-    fontSelect.addEventListener('change', ()=> updatePreviewFont());
+    [fontSelect,fontSizeSelect].forEach(el=>el.addEventListener('change',updatePreviewFont));
 
-    fileInput.addEventListener('change', async e => {
-      const f = e.target.files[0];
-      if (!f) return;
-      const ext = f.name.split('.').pop().toLowerCase();
-      if (['txt','md','html','htm'].includes(ext)) {
-        const text = await f.text();
-        input.value = text;
-        titleInput.value = f.name.replace(/\.[^.]+$/, '');
-      } else alert('Format file tidak didukung!');
+    fileInput.addEventListener('change',async e=>{
+      const f=e.target.files[0];if(!f)return;
+      const ext=f.name.split('.').pop().toLowerCase();
+      if(['txt','md','html','htm'].includes(ext)){
+        const text=await f.text();
+        input.value=text;
+        titleInput.value=f.name.replace(/\.[^.]+$/,'');
+      }else alert('Format file tidak didukung!');
     });
 
-    clearBtn.onclick = ()=> {
-      input.value = ''; titleInput.value = ''; previewArea.style.display = 'none';
-    };
+    clearBtn.onclick=()=>{input.value='';titleInput.value='';previewArea.style.display='none'};
 
-    previewBtn.onclick = ()=> {
-      previewArea.style.display = 'block';
-      const selectedFont = (formatSel.value === 'doc') ? fontSelect.value : 'Poppins';
-      const previewHtml = `
+    previewBtn.onclick=()=>{
+      previewArea.style.display='block';
+      const font=(formatSel.value==='doc')?fontSelect.value:'Poppins';
+      const size=(formatSel.value==='doc')?fontSizeSelect.value:14;
+      previewArea.innerHTML=`
         <div class="card" style="margin-top:8px;padding:14px;">
           <strong>Preview:</strong>
-          <div id="previewContent" style="margin-top:8px;white-space:pre-wrap;font-family:${cssFontName(selectedFont)};font-size:14px;line-height:1.5">
+          <div id="previewContent" style="margin-top:8px;white-space:pre-wrap;
+            font-family:${cssFont(font)};
+            font-size:${size}px;line-height:1.6">
             ${escapeHtml(input.value)}
           </div>
         </div>`;
-      previewArea.innerHTML = previewHtml;
-      // if selected font is google font, try to load it for preview
-      if (formatSel.value === 'doc' && googleFonts.has(fontSelect.value)) loadGoogleFontForPreview(fontSelect.value);
+      if(formatSel.value==='doc'&&googleFonts.has(font))loadFont(font);
     };
 
-    convertBtn.onclick = async ()=> {
-      try {
-        const text = input.value;
-        if (!text.trim() && !confirm('Konten kosong, tetap lanjut?')) return;
-        const title = (titleInput.value || 'document').replace(/[^A-Za-z0-9-_ ]+/g, '').trim() || 'document';
-        const fmt = formatSel.value;
-        if (fmt === 'pdf') await toPDF(text, title);
-        else if (fmt === 'doc') await toDOC(text, title);
-        else if (fmt === 'pptx') await toPPTX(text, title);
-      } catch (err) {
-        console.error('Convert error', err);
-        alert('Terjadi kesalahan saat convert. Buka console untuk detail.');
-      }
+    convertBtn.onclick=async()=>{
+      const text=input.value;
+      if(!text.trim()&&!confirm('Konten kosong, tetap lanjut?'))return;
+      const title=(titleInput.value||'document').replace(/[^A-Za-z0-9-_ ]+/g,'').trim()||'document';
+      const fmt=formatSel.value;
+      if(fmt==='pdf')await toPDF(text,title);
+      else if(fmt==='doc')await toDOC(text,title);
+      else if(fmt==='pptx')await toPPTX(text,title);
     };
 
-    function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+    function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+    function cssFont(name){return name.includes(' ')?`'${name}',sans-serif`:`${name},sans-serif`}
 
-    function cssFontName(name){
-      // return quoted font family for CSS
-      if (!name) return "'Poppins',sans-serif";
-      return (name.includes(' ') ? `'${name}', sans-serif` : `${name}, sans-serif`);
-    }
-
-    async function toPDF(txt,name){
-      try {
-        const { jsPDF } = window.jspdf;
-        const d = new jsPDF({ unit: 'pt', format: 'a4' });
-        d.setFont('helvetica',''); // built-in, reliable
-        const m = 40, w = d.internal.pageSize.getWidth() - m * 2;
-        const lines = d.splitTextToSize(txt, w);
-        let y = m;
-        for (const l of lines) {
-          if (y > 780) { d.addPage(); y = m; }
-          d.text(l, m, y);
-          y += 14;
-        }
-        d.save(name + '.pdf');
-      } catch (err) {
-        console.error('PDF error', err);
-        throw err;
-      }
-    }
-
-    async function toDOC(txt, name){
-      try {
-        const selectedFont = fontSelect.value || 'Poppins';
-        // If the font is available on Google Fonts, include the link; otherwise assume system font
-        let fontLinkTag = '';
-        if (googleFonts.has(selectedFont)) {
-          const family = encodeURIComponent(selectedFont);
-          fontLinkTag = `<link href="https://fonts.googleapis.com/css2?family=${family}:wght@400;700&display=swap" rel="stylesheet">`;
-        }
-        const html = `<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  ${fontLinkTag}
-  <style>
-    body { font-family: ${cssFontName(selectedFont)}; font-size:14px; line-height:1.6; color: #111; padding:20px; }
-    pre { white-space:pre-wrap; font-family: ${cssFontName(selectedFont)}; }
-  </style>
-</head>
-<body>${txt.replace(/\n/g,'<br>')}</body>
-</html>`;
-        const blob = new Blob([html], { type: 'application/msword' });
-        saveAs(blob, name + '.doc');
-      } catch (err) {
-        console.error('DOC error', err);
-        throw err;
-      }
-    }
-
-    async function toPPTX(txt, name){
-      try {
-        const pptx = new PptxGenJS();
-        const chunks = txt.split(/\n{2,}/).filter(Boolean);
-        if (chunks.length === 0) chunks.push(txt);
-        for (const c of chunks) {
-          const slide = pptx.addSlide();
-          // use Poppins for PPT; pptxgen may not embed web fonts reliably
-          slide.addText(c, { x:0.5, y:0.7, w:'90%', h:'80%', fontSize:20, fontFace:'Poppins', wrap:true });
-        }
-        await pptx.writeFile({ fileName: name + '.pptx' });
-      } catch (err) {
-        console.error('PPTX error', err);
-        throw err;
-      }
-    }
-
-    // helper: load google font into preview by appending link to head (idempotent)
-    function loadGoogleFontForPreview(fontName){
-      if (!fontName) return;
-      const family = encodeURIComponent(fontName);
-      const id = 'gf-' + family;
-      if (document.getElementById(id)) return;
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.id = id;
-      link.href = `https://fonts.googleapis.com/css2?family=${family}:wght@400;700&display=swap`;
+    function loadFont(font){
+      const fam=encodeURIComponent(font);
+      if(document.getElementById('gf-'+fam))return;
+      const link=document.createElement('link');
+      link.id='gf-'+fam;
+      link.rel='stylesheet';
+      link.href=`https://fonts.googleapis.com/css2?family=${fam}:wght@400;700&display=swap`;
       document.head.appendChild(link);
     }
 
     function updatePreviewFont(){
-      // if preview visible, update font
-      const previewDiv = document.getElementById('previewContent');
-      if (!previewDiv) return;
-      const selectedFont = (formatSel.value === 'doc') ? fontSelect.value : 'Poppins';
-      previewDiv.style.fontFamily = cssFontName(selectedFont);
-      if (formatSel.value === 'doc' && googleFonts.has(fontSelect.value)) loadGoogleFontForPreview(fontSelect.value);
+      const p=document.getElementById('previewContent');
+      if(!p)return;
+      const f=(formatSel.value==='doc')?fontSelect.value:'Poppins';
+      const size=(formatSel.value==='doc')?fontSizeSelect.value:14;
+      p.style.fontFamily=cssFont(f);
+      p.style.fontSize=size+'px';
+      if(googleFonts.has(f))loadFont(f);
     }
 
-    // initialize defaults
-    (function init(){
-      formatSel.value = 'pdf';
-      fontSelectWrap.style.display = 'none';
-    })();
+    async function toPDF(txt,name){
+      const {jsPDF}=window.jspdf;
+      const d=new jsPDF({unit:'pt',format:'a4'});
+      d.setFont('helvetica','');
+      const m=40,w=d.internal.pageSize.getWidth()-m*2;
+      const lines=d.splitTextToSize(txt,w);
+      let y=m;
+      for(const l of lines){if(y>780){d.addPage();y=m}d.text(l,m,y);y+=14}
+      d.save(name+'.pdf');
+    }
 
+    async function toDOC(txt,name){
+      const f=fontSelect.value||'Poppins';
+      const size=fontSizeSelect.value||14;
+      let linkTag='';
+      if(googleFonts.has(f)){
+        const fam=encodeURIComponent(f);
+        linkTag=`<link href="https://fonts.googleapis.com/css2?family=${fam}:wght@400;700&display=swap" rel="stylesheet">`;
+      }
+      const html=`<!doctype html><html><head><meta charset="utf-8">${linkTag}
+      <style>body{font-family:${cssFont(f)};font-size:${size}px;line-height:1.6;color:#111;padding:20px}</style></head>
+      <body>${txt.replace(/\n/g,'<br>')}</body></html>`;
+      saveAs(new Blob([html],{type:'application/msword'}),name+'.doc');
+    }
+
+    async function toPPTX(txt,name){
+      const pptx=new PptxGenJS();
+      const parts=txt.split(/\n{2,}/).filter(Boolean);
+      if(parts.length===0)parts.push(txt);
+      for(const c of parts){
+        const s=pptx.addSlide();
+        s.addText(c,{x:0.5,y:0.7,w:'90%',h:'80%',fontSize:20,fontFace:'Poppins',wrap:true});
+      }
+      await pptx.writeFile({fileName:name+'.pptx'});
+    }
+
+    formatSel.value='pdf';fontSelectWrap.style.display='none';
   })();
   </script>
 </body>
 </html>
-
