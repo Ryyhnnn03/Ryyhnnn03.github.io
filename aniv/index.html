@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Anniversary 5 Bulan 💞</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    .hero-ldr {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(10, 0, 40, 0.4), rgba(40, 0, 70, 0.6));
+      padding: 20px;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 50px 30px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .hero-content h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255, 182, 255, 0.7);
+      margin-bottom: 25px;
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff9df5, 0 0 20px #ffa3d3; }
+      to { text-shadow: 0 0 20px #ffc3fa, 0 0 35px #ffb3ef; }
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #9f73ff, #ff8fcf);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 35px;
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: 500;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.6);
+    }
+
+    .floating-hearts {
+      margin-top: 40px;
+    }
+
+    .floating-hearts span {
+      display: inline-block;
+      font-size: 2em;
+      margin: 5px;
+      animation: float 3s infinite ease-in-out;
+    }
+
+    .floating-hearts span:nth-child(2) { animation-delay: 0.3s; }
+    .floating-hearts span:nth-child(3) { animation-delay: 0.6s; }
+    .floating-hearts span:nth-child(4) { animation-delay: 0.9s; }
+    .floating-hearts span:nth-child(5) { animation-delay: 1.2s; }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.9; }
+      50% { transform: translateY(-15px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.9; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background -->
+  <div class="stars"></div>
+  <div class="twinkling"></div>
+  <div class="clouds"></div>
+
+
+  <header>
+    <nav>
+      <h1 class="logo">💫 Our Journey</h1>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="gallery.html">Moments</a></li>
+        <li><a href="message.html">Message</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero-ldr">
+    <div class="hero-content">
+      <h1>Happy 5 Months Anniversary 💞</h1>
+      <a href="gallery.html" class="btn">Our Story 💫</a>
+
+      <div class="floating-hearts">
+        <span>💗</span>
+        <span>💞</span>
+        <span>💖</span>
+        <span>💘</span>
+        <span>💝</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Musik otomatis -->
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2024/04/14/audio_1d0a3b9b12.mp3" type="audio/mp3">
+  </audio>
+</body>
+</html>
